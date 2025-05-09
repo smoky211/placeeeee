@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Billet Bad Bunny</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #eee;
+      text-align: center;
+    }
+
+    .inputs {
+      margin: 20px 0;
+    }
+
+    input {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      padding: 6px;
+      margin: 5px;
+      width: 250px;
+      text-align: center;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      background: none;
+      outline: none;
+    }
+
+    .ticket {
+      background-image: url('billet-bg.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      width: 760px;
+      height: 300px;
+      margin: auto;
+      padding-top: 40px;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      color: #000;
+      position: relative;
+    }
+
+    .line {
+      text-transform: uppercase;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    .bottom-space {
+      margin-top: 20px;
+    }
+
+    #capture-area {
+      width: fit-content;
+      margin: auto;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      background-color: #111;
+      color: white;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 800px) {
+      .ticket {
+        width: 95%;
+        height: auto;
+        padding: 30px 10px;
+      }
+
+      input {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="font-family:'Arial Black', sans-serif;">🎫 Générateur de billet BAD BUNNY</h2>
+
+  <div class="inputs">
+    <input type="text" id="lieu" value="PARIS LA DEFENSE ARENA" />
+    <input type="text" id="ville" value="NANTERRE" /><br />
+    <input type="text" id="date" value="SAMEDI 4 JUILLET 2026 A 20H00" /><br />
+    <input type="text" id="porte" placeholder="PORTE – BLOC – RANG – PLACE" value="PORTE 17 – BLOC 105 – RANG D – PLACE 24" />
+  </div>
+
+  <div id="capture-area">
+    <div class="ticket" id="ticket">
+      <div class="line" id="lieuAff">PARIS LA DEFENSE ARENA</div>
+      <div class="line" id="villeAff">NANTERRE</div>
+      <div class="line">Live Nation présente</div>
+      <div class="line bold">BAD BUNNY</div>
+      <div class="line">DEBI TIRAR MAS FOTOS</div>
+      <div class="line bottom-space" id="dateAff">SAMEDI 4 JUILLET 2026 A 20H00</div>
+      <div class="line bold" id="porteAff">PORTE 17 – BLOC 105 – RANG D – PLACE 24</div>
+    </div>
+  </div>
+
+  <button onclick="downloadTicket()">📥 Télécharger le billet</button>
+
+  <!-- html2canvas pour screenshot -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    const update = () => {
+      document.getElementById("lieuAff").innerText = document.getElementById("lieu").value.toUpperCase();
+      document.getElementById("villeAff").innerText = document.getElementById("ville").value.toUpperCase();
+      document.getElementById("dateAff").innerText = document.getElementById("date").value.toUpperCase();
+      document.getElementById("porteAff").innerText = document.getElementById("porte").value.toUpperCase();
+    };
+
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener("input", update);
+    });
+
+    function downloadTicket() {
+      html2canvas(document.getElementById("ticket")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "billet_bad_bunny.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
+
+</body>
+</html>
